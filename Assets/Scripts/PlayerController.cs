@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -48,8 +49,12 @@ public class PlayerController : MonoBehaviour
                         {
                             Vector3 target = hit.transform.position;
                             Debug.Log("Dest : " + hit.transform.name + " From : " + transform.position);
-                            List<Vector2> pathVec = PF.FindShortestPath(new Vector2(transform.position.x, transform.position.z), new Vector2(target.x,target.z));
-                            StartCoroutine(MoveToDest(pathVec));
+                            List<Vector2> pathVec =  new List<Vector2>();
+                            pathVec = PF.FindShortestPath(new Vector2(transform.position.x, transform.position.z), new Vector2(target.x, target.z)); 
+                            if (pathVec.Count > 0) 
+                            { 
+                                StartCoroutine(MoveToDest(pathVec));
+                            }
                         }
                     }
                 }

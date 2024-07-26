@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PathFinding : MonoBehaviour
@@ -40,13 +39,14 @@ public class PathFinding : MonoBehaviour
         endNode = grid[Mathf.RoundToInt(en.x), Mathf.RoundToInt(en.y)];
 
         // Get the path
-        List<GridNode> shortestPath = GetPath();
+        List<GridNode> shortestPath = new List<GridNode>();
+        shortestPath = GetPath();
         List<Vector2> path = new List<Vector2>();
         visitedNodes = new List<GridNode>();
 
-        if (shortestPath == null)
+        if (shortestPath.Count == 0)
         {
-            return null;
+            return new List<Vector2>();
         }
 
         Debug.Log(shortestPath.Count);
@@ -77,7 +77,7 @@ public class PathFinding : MonoBehaviour
             current = NearestNeighbourNode(current);
 
             if(current == null)
-                return null;
+                return new List<GridNode>();
 
             if (!path.Contains(current)) { path.Add(current); visitedNodes.Add(current); }
             else { 
